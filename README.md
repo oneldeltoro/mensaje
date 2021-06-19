@@ -1,31 +1,66 @@
-# mensaje
+# Microservicios para la gestion de tareas
 
-- Escribir mensaje
+- Estado del microservicio
 
-  java -jar .\mensajes-1.0-SNAPSHOT-jar-with-dependencies.jar --msg jskdfkjsdfkjb --logToFileParam true  --logToConsoleParam true --logToDatabaseParam false --logMessageParam true --logWarningParam true --logErrorParam false --driver postgress --host localhost --port 1234 --dbname hdfj --username dfg --password fdjk
+  curl --request GET 'http://localhost:7000/tarea/heartbeat'
 
+- Almacenar una tarea
 
+  curl --location --request PUT 'http://localhost:7000/tarea/add' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+  "descripcion": "esto es probando",
+  "fechaCreacio": "2021-05-07T20:39:43.994+00:00",
+  "identificador": 11,
+  "vigente": true
+  }'
+
+- Listado de tareas
+
+  curl --request GET 'http://localhost:7000/tarea/all'
+
+- Obtener una tarea
   
-Los argumentos para lanzar comando java, es la siguiente:
+  curl --request GET 'http://localhost:7000/tarea/{id}'
+
+- Eliminar una tarea 
+  
+  curl --request DELETE 'http://localhost:7000/tarea/{id}'
+
+- Actualizar una tarea
+
+  curl --location --request PUT 'http://localhost:7000/tarea/update' \
+   --header 'Content-Type: application/json' \
+   --data-raw '{
+   "descripcion": "esto es probando",
+   "fechaCreacio": "2021-05-07T20:39:43.994+00:00",
+   "identificador": 11,
+   "vigente": true
+    }'
+  
+La configuración por defecto para la base de datos, es la siguiente:
 
 ```yaml
---msg 
---logToFileParam 
---logToConsoleParam 
---logToDatabaseParam 
---logMessageParam 
---logWarningParam 
---logErrorParam 
---driver 
---host 
---port 
---dbname
---username 
---password fdjk 
+spring.datasource.url=jdbc:h2:mem:tareas #Ubicacion de la Tabla Tareas
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa #Nombre del usuario
+spring.datasource.password=   #Password del Usuario
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true # Enabling H2 Console
+spring.h2.console.path=/h2 # Custom H2 Console URL
+
+## Hibernate Propiedades
+jpa.hibernate.ddl-auto: update # Hibernate ddl auto (create, create-drop, validate, update)
+jpa.properties.hibernate.dialect: org.hibernate.dialect.H2Dialect # The SQL dialect makes Hibernate generate better SQL for the chosen database
+jpa.generate-ddl: true
 
 ```
 
--Docker
+Dentro de los valores , seleccionando formato `YAML` esta el puerto:
 
-docker run -e ARGS="--msg jskdfkjsdfkjb --logToFileParam true  --logToConsoleParam true --logToDatabaseParam false --logMessageParam true --logWarningParam true --logErrorParam false --driver postgress --host localhost --port 1234 --dbname hdfj --username dfg --password fdjk" quay.io/onel_deltoro/mensaje
+```yaml
+server:
+  port: 7000
+```
+
 

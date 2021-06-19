@@ -1,0 +1,9 @@
+entities.class
+soint\messages\writer\DataBaseMessages.class
+soint\messages\writer\LogMessages.class
+soint\messages\writer\GenericMessageWriter.class
+soint\messages\interfaces\JDBCArgsKeys.class
+soint\messages\writer\ConsoleMessages.class
+soint\messages\Demo.class
+soint\messages\interfaces\WriterMessages.class
+soint\messages\connection\ConnectionProvider.class
